@@ -1,0 +1,53 @@
+---
+- name: bootstrapping and new user
+  hosts: raiders
+  gather_facts: False
+
+  vars:
+          newuser1: marian
+          newuser2: belloq
+          newuser3: willie
+          newuser4: elsa
+
+  tasks:
+          - name: update apt with latest repo info
+            raw: "apt upgrade -y"
+            become: yes
+
+          - name: install py3 and pip3 with ansible raw
+            raw: "apt install -y python3-pip"
+            become: yes
+
+          - name: create new group
+            group:
+                    name: indymovies
+                    state: present
+            become: yes
+
+          - name: add newuser1 to target hosts
+            user:
+                    name: "{{ newuser1 }}"
+                    state: present
+                    group: indymovies
+            become: yes
+
+          - name: add newuser2 to target hosts
+            user:
+                    name: "{{ newuser2 }}"
+                    state: present
+                    group: indymovies
+            become: yes
+
+          - name: add newuser3 to target hosts
+            user:
+                    name: "{{ newuser3 }}"
+                    state: present
+                    group: indymovies
+            become: yes
+
+          - name: add newuser4 to target hosts
+            user:
+                    name: "{{ newuser4 }}"
+                    state: present
+                    group: indymovies
+            become: yes

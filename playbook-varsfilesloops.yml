@@ -1,0 +1,30 @@
+---
+- name: bootstrapping and new user
+  hosts: raiders
+  gather_facts: False
+
+  vars_files:
+          - vars/indyusers.yml
+
+  tasks:
+          - name: update apt with latest repo info
+            raw: "apt upgrade -y"
+            become: yes
+
+          - name: install py3 and pip3 with ansible raw
+            raw: "apt install -y python3-pip"
+            become: yes
+
+          - name: create new group
+            group:
+                    name: indymovies
+                    state: present
+            become: yes
+
+          - name: add newusers to target hosts
+            user:
+                    name: "{{ item }}"
+                    state: present
+                    group: indymovies
+            become: yes
+            loop: "{{ newusers }}"
