@@ -1,0 +1,36 @@
+---
+ - name: Playbook with tags
+   hosts: planetexpress
+
+   vars:
+     cargo1: "prizes for claw crane"
+     cargo2: "popcorn"
+     cargo3: "pillows"
+
+   vars_files:
+     - /home/student/tags/vars/vars.yml
+
+   tasks:
+     - name: "Deploy orders to the crew"
+       template:
+         src: /home/student/tags/templates/orders.txt.j2 #name of controller template
+         dest: ~/orders.txt #name of completed output file
+       tags:
+         - orders
+
+     - name: "Deploy the cargo manafest"
+       template:
+         src: /home/student/tags/templates/cargo_manafest.txt.j2
+         dest: ~/cargo_manafest.txt
+       tags:
+         - cargo
+         - ship_prep
+
+     - name: "Install navigation chargs"
+       template:
+         src: /home/student/tags/templates/navigation_charts.cfg.j2
+         dest: ~/navigation_charts.cfg
+       tags:
+         - nav
+         - ship_prep
+
