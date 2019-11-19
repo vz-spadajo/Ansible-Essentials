@@ -1,0 +1,13 @@
+---
+- name: Our first play
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+
+    - name: Install steam locomotive no ALL machines
+      apt:
+        name: sl
+        state: present
+      become: yes #run as superuser
+      when: ansible_distribution == "Ubuntu"

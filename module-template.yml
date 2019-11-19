@@ -1,0 +1,14 @@
+---
+ - hosts: planetexpress
+
+   vars:
+     ship_name: "Bessie"
+     ship_type: "Intergalactic"
+     engines: "Dark Matter"
+   
+
+   tasks:
+     - name: "Configure space ship config file"
+       template: #This module was discussed earlier
+         src: /home/student/templates/ship.cfg.j2 #name of template on Ansible Controller
+         dest: ~/ship.cfg #name of the completed output file

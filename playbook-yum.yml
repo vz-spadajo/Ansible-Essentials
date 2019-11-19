@@ -1,0 +1,20 @@
+---
+- name: Install steam locomotive with yum
+  hosts: planetexpress
+  gather_facts: yes
+
+  tasks:
+
+    - name: Install steam locomotive with yum
+      yum:
+        name: sl
+        state: present
+      become: yes #run as superuser
+      when: ansible_distribution == "CentOS"
+
+    - name: Instll steam locomotive with apt
+      apt:
+        name: sl
+        state: present
+      become: yes #run as superuser
+      when: ansible_distribution == "Ubuntu"

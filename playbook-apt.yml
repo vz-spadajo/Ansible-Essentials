@@ -1,0 +1,11 @@
+---
+- name: Our first play
+  hosts: planetexpress
+
+  tasks:
+
+    - name: Install steam locomotive no ALL machines
+      apt:
+        name: sl
+        state: present
+      become: yes #run as superuser
