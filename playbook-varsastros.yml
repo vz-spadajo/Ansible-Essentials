@@ -1,0 +1,21 @@
+---
+- name: print out astro data from vars file
+  hosts: localhost
+  connection: local
+
+  vars_files:
+          - vars/astros.yml
+
+  tasks:
+          - name: print out Jessica Meir
+            debug:
+                    msg: "{{ astros.people[5].name }}"
+
+          - name: print out ALL astros
+            debug:
+                    msg: "{{ astros.people }}"
+
+          - name: print out number of astros on ISS
+            debug:
+                    msg: "{{ astros.number }}"
+

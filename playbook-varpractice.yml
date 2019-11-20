@@ -1,0 +1,42 @@
+---
+- name: learning to recall var data
+  hosts: localhost
+  connection: local
+
+  vars:
+          telecom:
+                  - ericsson
+                  - alu
+                  - avaya
+                  - cisco
+          heroes:
+                  marvel:
+                          - spiderman
+                          - ironman
+                          - daredevil
+                  dc:
+                          - wonderwoman
+                          - batman
+                          - superman
+
+  tasks:
+          - name: print out spiderman
+            debug:
+                    msg: "{{ heroes.marvel[0] }}"
+
+          - name: print out batman
+            debug:
+                    msg: "{{ heroes.dc[1] }}"
+
+          - name: print out ALL dc heroes
+            debug:
+                    msg: "{{ heroes.dc }}"
+
+          - name: print out cisco
+            debug:
+                    msg: "{{ telecom[3] }}"
+
+          - name: print out ALL dc AND marvel heroes
+            debug:
+                    msg: "{{ heroes.marvel + heroes.dc }}"
+                      
