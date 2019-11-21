@@ -1,0 +1,45 @@
+---
+- name: create a playbook that parses logs and emails on a hit
+  hosts: planetexpress
+
+  vars:
+          logtosearch: "/var/log/"
+          storeloc: "~/logstoemail/"
+
+  tasks:
+
+          ## parse log file on target machines
+          ## log location /var/log/bootstrap.log
+          ## if match on WARNING save that line
+
+          - name: Parse log file
+            find:
+                    contains: "^WARNING.*"
+                    paths: "{{ logtosearch }}"
+                    #use_regex: yes #parameter poorly documented
+            register: results
+            become: yes
+
+          - name: What the heck is results??
+            debug:
+                    var: results
+
+          - name: create a directory on Ansible controller to store files to send in email
+            file:
+                    path: "{{ storeloc }}"
+                    state: directory
+            delegate_to: localhost
+            run_once: yes
+
+          - name: fetch files and bring them back to the Ansible controller
+            fetch:
+                    src: "{{ item.path }}"
+                    dest: "{{ storeloc }}"
+            loop: "{{ results.files }}"
+
+          - name: archive our results
+            archive:
+                    path: "{{ storeloc }}*"
+                    dest: "{{ storeloc }}filetoemail.gz"
+            delegate_to: localhost
+            run_once: yes

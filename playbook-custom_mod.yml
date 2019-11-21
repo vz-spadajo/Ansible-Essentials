@@ -1,0 +1,8 @@
+---
+- name: showing how to run a custom module
+  hosts: localhost
+
+  tasks:
+          - name: run the Thursday module
+            thursday:
+                    name: John
